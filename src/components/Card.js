@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
-// let numeral = require("numeral");
+let numeral = require("numeral");
 let backdropIMG;
 
 class Card extends Component {
@@ -29,7 +29,7 @@ class Card extends Component {
     if (totalRevenue === "undefined" || totalRevenue === 0) {
       totalRevenue = noData;
     } else {
-      // totalRevenue = numeral(data.revenue).format("($0,0)");
+      totalRevenue = numeral(data.revenue).format("($0,0)");
     }
 
     if (data.poster == null) {

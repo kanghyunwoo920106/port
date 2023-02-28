@@ -23,14 +23,12 @@ class App extends Component {
         <Card data={this.state} />
       </Container>
     );
-  } // END render
+  }
 
-  // the api request function
   fetchApi(url) {
     fetch(url)
       .then((res) => res.json())
       .then((data) => {
-        // update state with API data
         this.setState({
           movieID: data.id,
           original_title: data.original_title,
@@ -59,7 +57,6 @@ class App extends Component {
     let url = `https://api.themoviedb.org/3/movie/${this.state.movieID}?&api_key=0fe165fda5e9fc777b68d30d2806886d`;
     this.fetchApi(url);
 
-    //========================= BLOODHOUND ==============================//
     let suggests = new Bloodhound({
       datumTokenizer: function (datum) {
         return Bloodhound.tokenizers.whitespace(datum.value);
@@ -69,29 +66,24 @@ class App extends Component {
         url: `https://api.themoviedb.org/3/search/movie?query=%Query&api_key=0fe165fda5e9fc777b68d30d2806886d`,
         wildcard: "%Query",
         filter: function (movies) {
-          // Map the remote source JSON array to a JavaScript object array
           return $.map(movies.results, function (movie) {
             return {
-              value: movie.original_title, // search original title
-              id: movie.id, // get ID of movie simultaniously
+              value: movie.original_title,
+              id: movie.id,
             };
           });
-        }, // end filter
-      }, // end remote
-    }); // end new Bloodhound
+        },
+      },
+    });
 
-    suggests.initialize(); // initialise bloodhound suggestion engine
+    suggests.initialize();
 
-    //========================= END BLOODHOUND ==============================//
-
-    //========================= TYPEAHEAD ==============================//
-    // Instantiate the Typeahead UI
     $(".typeahead")
       .typeahead(
         {
           hint: true,
           highlight: true,
-          minLength: 2,
+          minLength: 1,
         },
         {
           source: suggests.ttAdapter(),
@@ -110,10 +102,6 @@ class App extends Component {
           this.fetchMovieID(datum.id);
         }.bind(this)
       );
-    // END Instantiate the Typeahead UI
-    //========================= END TYPEAHEAD ==============================//
-  } // end component did mount function
-
-  // } // END CLASS - APP
+  }
 }
 export default App;
