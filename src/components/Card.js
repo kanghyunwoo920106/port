@@ -38,8 +38,11 @@ class Card extends Component {
     }
 
     return (
-      <div className="col-xs-12 cardcont nopadding">
-        <div className="meta-data-container col-xs-12 col-md-8 push-md-4 col-lg-7 push-lg-5">
+      <div className="col-xs-12 cardcont nopadding" style={{ float: "left" }}>
+        <div
+          className="meta-data-container col-xs-12 col-md-8 push-md-4 col-lg-7 push-lg-5"
+          style={{ float: "right" }}
+        >
           <h1>{data.original_title}</h1>
 
           <span className="tagline">{data.tagline}</span>
@@ -47,29 +50,28 @@ class Card extends Component {
           <div className="additional-details">
             <span className="genre-list">{genresList}</span>
             <span className="production-list">{productionList}</span>
-            <div className="row nopadding release-details">
+            <div className="nopadding release-details">
               <div className="col-xs-6">
-                {" "}
-                Original Release:{" "}
+                Original Release:
                 <span className="meta-data">{data.release}</span>
               </div>
               <div className="col-xs-6">
-                {" "}
-                Running Time:{" "}
-                <span className="meta-data">{data.runtime} mins</span>{" "}
+                Running Time:
+                <span className="meta-data">{data.runtime} mins</span>
               </div>
               <div className="col-xs-6">
-                {" "}
                 Box Office: <span className="meta-data">{totalRevenue}</span>
               </div>
               <div className="col-xs-6">
-                {" "}
                 Vote Average: <span className="meta-data">{data.vote}</span>
               </div>
             </div>
           </div>
         </div>
-        <div className="poster-container nopadding col-xs-12 col-md-4 pull-md-8 col-lg-5 pull-lg-7 ">
+        <div
+          className="poster-container nopadding col-xs-12 col-md-4 pull-md-8 col-lg-5 pull-lg-7 "
+          style={{ float: "left" }}
+        >
           <img id="postertest" className="poster" src={posterIMG} />
         </div>
       </div>

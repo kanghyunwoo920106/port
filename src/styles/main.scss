@@ -1,6 +1,7 @@
 @import "./helpers/_variables" ;
 @import "./helpers/_animations";
 @import "../../bower_components/bootstrap/scss/bootstrap.scss";
+
 /* body */
 html {
   height: 100%;
@@ -26,7 +27,25 @@ body {
     animation: fadein ease-out 1.4s;
 }
 
-  
+/* logo */
+.logo {
+  width: 100%;
+  max-width: 140px;
+  margin: 0 auto;
+  margin-bottom: 25px;
+  display: block;
+}
+
+
+// sm up
+@include media-breakpoint-up(sm) {
+  .logo {
+    display: inline-block;
+    margin-bottom: 0;
+  }
+}
+ 
+
 
   /* search */
 
@@ -109,13 +128,6 @@ body {
   }
 }
 
-// sm up
-@include media-breakpoint-up(sm) {
-  .searchbox {
-    margin-top: 8px;
-  }
-}
-
 
 
 .card_wrapper {
@@ -192,13 +204,7 @@ body {
 
 /* Breakpoints */
 
-// sm up
-@include media-breakpoint-up(sm) {
-  /* meta data */
-  .meta-data-container {
-    padding: 25px;
-  }
-}
+
 // // END sm up
 
 // // md up
@@ -240,14 +246,15 @@ body {
 }
 
 .tt-menu { /* UPDATE: newer versions use tt-menu instead of tt-dropdown-menu */
-    width: 422px;
-    margin-top: 12px;
-    padding: 8px 0;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
-    box-shadow: 0 5px 10px rgba(0,0,0,.2);
+  animation: fadein ease-out 0.5s;
+  min-width: 100%;
+  margin-top: 2px;
+  padding: 5px 0;
+  background: rgba(0, 0, 0, 0.85);
+  border-radius: 4px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  background-clip: padding-box;
+  color: $lightGrey;
 }
 
 .tt-suggestion {
@@ -257,12 +264,24 @@ body {
     cursor: pointer;
 }
 
-.tt-suggestion:hover {
-    color: #f0f0f0;
-    background-color: #0097cf;
-}
+// suggestions text
+.tt-suggestion {
+  padding: 3px 20px;
+  font-size: 18px;
+  line-height: 24px;
 
-.tt-suggestion p {
-    margin: 0;
+  p {
+    margin: 5px 0; // suggestion list spacing
+  }
+  // hover styles
+  &.tt-cursor,
+  &:hover {
+    color: $darkGrey;
+    background-color: $limeGreen;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
 }
 

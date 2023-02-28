@@ -6,21 +6,22 @@ import "./styles/main.css";
 import axios from "axios";
 import Bloodhound from "bloodhound-js/lib/bloodhound";
 import typeahead from "corejs-typeahead";
+import { Container, Row } from "react-bootstrap";
 
 class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      movieID: 157336, // set initital load movie - Interstellar
+      movieID: 157336,
     };
   }
   render() {
     return (
-      <div>
+      <Container>
         <SearchBox fetchMovieID={this.fetchMovieID.bind(this)} />
         <Card data={this.state} />
-      </div>
+      </Container>
     );
   } // END render
 
@@ -47,14 +48,12 @@ class App extends Component {
           backdrop: data.backdrop_path,
         });
       });
-
-    // .catch((err) => console.log('Movie not found!'))
-  } // end function
+  }
 
   fetchMovieID(movieID) {
     let url = `https://api.themoviedb.org/3/movie/${movieID}?&api_key=0fe165fda5e9fc777b68d30d2806886d`;
     this.fetchApi(url);
-  } // end function
+  }
 
   componentDidMount() {
     let url = `https://api.themoviedb.org/3/movie/${this.state.movieID}?&api_key=0fe165fda5e9fc777b68d30d2806886d`;
@@ -67,7 +66,8 @@ class App extends Component {
       },
       queryTokenizer: Bloodhound.tokenizers.whitespace,
       remote: {
-        url: "https://api.themoviedb.org/3/search/movie?query=%QUERY&api_key=0fe165fda5e9fc777b68d30d2806886d",
+        url: `https://api.themoviedb.org/3/search/movie?query=%Query&api_key=0fe165fda5e9fc777b68d30d2806886d`,
+        wildcard: "%Query",
         filter: function (movies) {
           // Map the remote source JSON array to a JavaScript object array
           return $.map(movies.results, function (movie) {
@@ -93,14 +93,24 @@ class App extends Component {
           highlight: true,
           minLength: 2,
         },
-        { source: suggests.ttAdapter() }
+        {
+          source: suggests.ttAdapter(),
+          templates: {
+            suggestion: function (data) {
+              return `<p>
+                <strong>${data.value}</strong>
+              </p>`;
+            },
+          },
+        }
       )
       .on(
         "typeahead:selected",
         function (obj, datum) {
           this.fetchMovieID(datum.id);
         }.bind(this)
-      ); // END Instantiate the Typeahead UI
+      );
+    // END Instantiate the Typeahead UI
     //========================= END TYPEAHEAD ==============================//
   } // end component did mount function
 
